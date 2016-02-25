@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Dmitry Dzhus
+  description: Set up vital-signs-monitor
+  company: MailOnline
+  license: BSD
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty

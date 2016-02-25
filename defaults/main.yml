@@ -1,0 +1,6 @@
+lfw_home: /opt/local/log-forwarder
+lfw_instance: main
+lfw_pidfile: "/var/run/{{ lfw_service }}.pid"
+lfw_release: v0.1
+lfw_service: log-forwarder-{{ lfw_instance }}
+lfw_tarball_sha256sum: 5cd02f05aef0cc69a6c624b26412979717546f978900b6545cfc6ee6c43047c2

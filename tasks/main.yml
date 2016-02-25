@@ -1,0 +1,25 @@
+- name: log-forwarder directory
+  # This also ensures that all parent directories exist
+  file: dest={{ lfw_home }}/offsets state=directory
+
+- name: Fetch log-forwarder {{ lfw_release }}
+  get_url:
+    url:  https://github.com/MailOnline/forwarder/archive/{{lfw_release}}.tar.gz
+    checksum: "sha256:{{ lfw_tarball_sha256sum }}"
+    dest: "{{ lfw_home }}"
+  register: fetch_result
+
+- name: Remember log-forwarder location
+  set_fact:
+    lfw_tarball: "{{ fetch_result.dest }}"
+    lfw_dir: "{{ fetch_result.dest|replace('.tar.gz','') }}"
+
+- name: Unpack log-forwarder {{ lfw_release }}
+  unarchive: src={{ lfw_tarball }} dest={{ lfw_home }} copy=no
+  notify: Enable and restart {{ lfw_service }}
+
+- name: Create Upstart {{ lfw_service }} service
+  template:
+    src: log-forwarder.j2
+    dest: /etc/init/{{ lfw_service }}.conf
+  notify: Enable and restart {{ lfw_service }}

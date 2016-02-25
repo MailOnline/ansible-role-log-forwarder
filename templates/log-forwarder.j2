@@ -1,0 +1,16 @@
+description '{{ lfw_service }}'
+
+start on (local-filesystems and net-device-up)
+stop on shutdown
+
+script
+  exec {{ lfw_dir }}/sender \
+    -f \
+    -r \
+    -p {{ lfw_home }}/offsets/{{ lfw_instance }} \
+    '{{ lfw_pattern }}' \
+    -t {{ lfw_address }}{% if lfw_filter|default(false) %} \
+    -l {{ lfw_filter }}
+{% endif %}
+
+end script

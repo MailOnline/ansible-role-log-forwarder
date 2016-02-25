@@ -1,0 +1,5 @@
+- name: Enable and restart {{ lfw_service }}
+  service:
+    enabled: yes
+    name: "{{ lfw_service }}"
+    state: restarted
